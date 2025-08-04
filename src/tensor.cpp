@@ -1,22 +1,36 @@
-// src/tensor.cpp
+#include "tensor.h"
+#include <iostream>
+#include <stdexcept>
 
-#include "tensor.hpp"
+Tensor Tensor::add(const Tensor &other) const {
+    if (rows_ != other.rows_ || cols_ != other.cols_)
+        throw std::invalid_argument("Tensor dimensions must match for addition.");
 
-Tensor::Tensor(const std::vector<int>& shape) : shape(shape) {
-    int size = 1;
-    for (int dim : shape)
-        size *= dim;
-    data.resize(size, 0.0f);  // Initialize with zeros
+    Tensor result(rows_, cols_);
+    for (int i = 0; i < rows_; ++i)
+        for (int j = 0; j < cols_; ++j)
+            result.set_value(i, j, get_value(i, j) + other.get_value(i, j));
+    return result;
 }
 
-void Tensor::print() const {
-    std::cout << "Tensor shape: [ ";
-    for (int dim : shape)
-        std::cout << dim << " ";
-    std::cout << "]\n";
+Tensor Tensor::multiply(const Tensor &other) const {
+    if (rows_ != other.rows_ || cols_ != other.cols_)
+        throw std::invalid_argument("Tensor dimensions must match for multiplication.");
 
-    std::cout << "Tensor data: [ ";
-    for (float val : data)
-        std::cout << val << " ";
-    std::cout << "]\n";
+    Tensor result(rows_, cols_);
+    for (int i = 0; i < rows_; ++i)
+        for (int j = 0; j < cols_; ++j)
+            result.set_value(i, j, get_value(i, j) * other.get_value(i, j));
+    return result;
+}
+
+float Tensor::dot(const Tensor &other) const {
+    if (rows_ != other.rows_ || cols_ != other.cols_)
+        throw std::invalid_argument("Tensor dimensions must match for dot product.");
+
+    float result = 0.0f;
+    for (int i = 0; i < rows_; ++i)
+        for (int j = 0; j < cols_; ++j)
+            result += get_value(i, j) * other.get_value(i, j);
+    return result;
 }
