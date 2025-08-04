@@ -1,19 +1,18 @@
-#pragma once
+#ifndef TENSOR_H
+#define TENSOR_H
+
 #include <vector>
 
 class Tensor {
+private:
+    int rows, cols;
+    std::vector<std::vector<float>> data;
+
 public:
     Tensor(int rows, int cols);
-    void set_value(int row, int col, float value);
-    float get_value(int row, int col) const;
+    void set_value(int i, int j, float value);
+    float get_value(int i, int j) const;
     void print() const;
-
-    // New ops
-    Tensor add(const Tensor &other) const;
-    Tensor multiply(const Tensor &other) const;
-    float dot(const Tensor &other) const;
-
-private:
-    int rows_, cols_;
-    std::vector<std::vector<float>> data_;
 };
+
+#endif
