@@ -1,19 +1,22 @@
-// include/tensor.hpp
+// src/tensor.cpp
 
-#ifndef TENSOR_HPP
-#define TENSOR_HPP
+#include "tensor.hpp"
 
-#include <vector>
-#include <iostream>
+Tensor::Tensor(const std::vector<int>& shape) : shape(shape) {
+    int size = 1;
+    for (int dim : shape)
+        size *= dim;
+    data.resize(size, 0.0f);  // Initialize with zeros
+}
 
-class Tensor {
-public:
-    Tensor(const std::vector<int>& shape);
-    void print() const;
+void Tensor::print() const {
+    std::cout << "Tensor shape: [ ";
+    for (int dim : shape)
+        std::cout << dim << " ";
+    std::cout << "]\n";
 
-private:
-    std::vector<int> shape;
-    std::vector<float> data;
-};
-
-#endif // TENSOR_HPP
+    std::cout << "Tensor data: [ ";
+    for (float val : data)
+        std::cout << val << " ";
+    std::cout << "]\n";
+}
