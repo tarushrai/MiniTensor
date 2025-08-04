@@ -1,30 +1,31 @@
 #include "tensor.h"
-#include <iostream>
 
 int main() {
-    Tensor A(2, 2);
-    A.set_value(0, 0, 1.0f);
-    A.set_value(0, 1, 2.0f);
-    A.set_value(1, 0, 3.0f);
-    A.set_value(1, 1, 4.0f);
+    Tensor A({2, 3});
+    Tensor B({2, 3});
 
-    Tensor B(2, 2);
-    B.set_value(0, 0, 5.0f);
-    B.set_value(0, 1, 6.0f);
-    B.set_value(1, 0, 7.0f);
-    B.set_value(1, 1, 8.0f);
-
-    std::cout << "A:\n"; A.print();
-    std::cout << "B:\n"; B.print();
+    // Fill A and B with values
+    int val = 1;
+    for (int i = 0; i < 2; ++i)
+        for (int j = 0; j < 3; ++j) {
+            A.at({i, j}) = val;
+            B.at({i, j}) = val * 2;
+            ++val;
+        }
 
     Tensor C = A.add(B);
-    std::cout << "A + B:\n"; C.print();
-
     Tensor D = A.multiply(B);
-    std::cout << "A * B (element-wise):\n"; D.print();
-
     float dot = A.dot(B);
-    std::cout << "A . B (dot product): " << dot << "\n";
+
+    std::cout << "Tensor A: ";
+    A.print();
+    std::cout << "Tensor B: ";
+    B.print();
+    std::cout << "A + B = ";
+    C.print();
+    std::cout << "A * B = ";
+    D.print();
+    std::cout << "A . B = " << dot << "\n";
 
     return 0;
 }
