@@ -1,31 +1,25 @@
-#include "tensor.h"
+#include "../include/tensor.hpp"
 
 int main() {
-    Tensor A({2, 3});
-    Tensor B({2, 3});
+    // Create two 2x3 tensors
+    Tensor A({2, 3}, 1.0f);   // Fills with 1.0
+    Tensor B({2, 3}, 2.0f);   // Fills with 2.0
 
-    // Fill A and B with values
-    int val = 1;
-    for (int i = 0; i < 2; ++i)
-        for (int j = 0; j < 3; ++j) {
-            A.at({i, j}) = val;
-            B.at({i, j}) = val * 2;
-            ++val;
-        }
-
-    Tensor C = A.add(B);
-    Tensor D = A.multiply(B);
-    float dot = A.dot(B);
-
-    std::cout << "Tensor A: ";
+    std::cout << "Tensor A:\n";
     A.print();
-    std::cout << "Tensor B: ";
+
+    std::cout << "\nTensor B:\n";
     B.print();
-    std::cout << "A + B = ";
+
+    // Element-wise addition
+    Tensor C = A + B;
+    std::cout << "\nA + B:\n";
     C.print();
-    std::cout << "A * B = ";
+
+    // Element-wise multiplication
+    Tensor D = A * B;
+    std::cout << "\nA * B:\n";
     D.print();
-    std::cout << "A . B = " << dot << "\n";
 
     return 0;
 }
