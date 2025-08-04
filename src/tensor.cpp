@@ -1,23 +1,38 @@
 #include "tensor.h"
-#include <iostream>
+#include <stdexcept> // For std::invalid_argument
 
-Tensor::Tensor(int rows, int cols) : rows(rows), cols(cols) {
-    data.resize(rows, std::vector<float>(cols, 0.0f));
-}
-
-void Tensor::set_value(int i, int j, float value) {
-    data[i][j] = value;
-}
-
-float Tensor::get_value(int i, int j) const {
-    return data[i][j];
-}
-
-void Tensor::print() const {
-    for (const auto& row : data) {
-        for (float val : row) {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
+Tensor Tensor::add(const Tensor& other) const {
+    if (data.size() != other.data.size()) {
+        throw std::invalid_argument("Size mismatch in add()");
     }
+
+    Tensor result(data.size());
+    for (size_t i = 0; i < data.size(); ++i) {
+        result.data[i] = data[i] + other.data[i];
+    }
+    return result;
+}
+
+Tensor Tensor::multiply(const Tensor& other) const {
+    if (data.size() != other.data.size()) {
+        throw std::invalid_argument("Size mismatch in multiply()");
+    }
+
+    Tensor result(data.size());
+    for (size_t i = 0; i < data.size(); ++i) {
+        result.data[i] = data[i] * other.data[i];
+    }
+    return result;
+}
+
+float Tensor::dot(const Tensor& other) const {
+    if (data.size() != other.data.size()) {
+        throw std::invalid_argument("Size mismatch in dot()");
+    }
+
+    float sum = 0;
+    for (size_t i = 0; i < data.size(); ++i) {
+        sum += data[i] * other.data[i];
+    }
+    return sum;
 }
