@@ -1,33 +1,19 @@
-#pragma once
+// include/tensor.hpp
+
+#ifndef TENSOR_HPP
+#define TENSOR_HPP
+
 #include <vector>
 #include <iostream>
-#include <stdexcept>
-#include <iomanip>
 
 class Tensor {
-private:
-    std::vector<float> data;
-    std::vector<size_t> shape;
-
 public:
-    // Constructors
-    Tensor(std::vector<size_t> shape_, float value = 0.0f);
-
-    // Element Access
-    float& operator()(size_t i, size_t j);
-    float operator()(size_t i, size_t j) const;
-
-    // Getters
-    std::vector<size_t> get_shape() const;
-
-    // Operations
-    Tensor operator+(const Tensor& other) const;
-    Tensor operator*(const Tensor& other) const;
-
-    // Utilities
+    Tensor(const std::vector<int>& shape);
     void print() const;
 
-    // Broadcasting
-    static Tensor broadcast_add(const Tensor& A, const Tensor& B);
-    static Tensor broadcast_mul(const Tensor& A, const Tensor& B);
+private:
+    std::vector<int> shape;
+    std::vector<float> data;
 };
+
+#endif // TENSOR_HPP
